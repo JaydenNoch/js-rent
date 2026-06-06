@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route bawaan Laravel untuk mengambil data user (butuh Sanctum)
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-use App\Http\Controllers\CheckoutController;
+// Route Midtrans untuk project js-rent lu
 Route::post('/checkout', [CheckoutController::class, 'getToken']);
 Route::post('/midtrans-notification', [CheckoutController::class, 'receiveNotification']);

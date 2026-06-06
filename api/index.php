@@ -1,9 +1,9 @@
 <?php
 
-// 1. Ambil autoloader Composer
+// 1. Load Autoloader Composer duluan biar class framework kebaca
 require __DIR__ . '/../vendor/autoload.php';
 
-// 2. Siapkan folder writable di /tmp Vercel
+// 2. Buat struktur folder writable di memori temporary Vercel (/tmp)
 if (isset($_SERVER['VERCEL_URL'])) {
     $dirs = [
         '/tmp/storage/framework/views',
@@ -20,7 +20,7 @@ if (isset($_SERVER['VERCEL_URL'])) {
     }
 }
 
-// 3. Ambil instance aplikasi Laravel yang sudah kita override
+// 3. Ambil instance aplikasi Laravel yang sudah kita override fungsi bootstrapPath-nya
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);

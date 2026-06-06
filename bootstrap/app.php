@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
-// OVERRIDE SAKTI: Kita paksa method bootstrapPath() mengembalikan folder /tmp jika di Vercel
+// OVERRIDE TOTAL: Paksa Laravel mengalihkan folder bootstrap/cache ke /tmp jika di Vercel
 $app = new class($_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)) extends Illuminate\Foundation\Application {
     public function bootstrapPath($path = '')
     {
@@ -23,6 +23,7 @@ $app = new class($_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)) extends Illuminate\
 |--------------------------------------------------------------------------
 */
 
+// Alihkan folder storage ke /tmp agar session, views, dan logs bisa ditulis
 if (isset($_SERVER['VERCEL_URL'])) {
     $app->useStoragePath('/tmp/storage');
 }

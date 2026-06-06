@@ -13,5 +13,10 @@
             "dest": "api/index.php"
         }
     ],
-    "outputDirectory": "public"
+    "outputDirectory": "public",
+    "env": {
+        "LOG_CHANNEL": "stderr",
+        "VIEW_COMPILED_PATH": "/tmp/storage/framework/views",
+        "DATA_CACHE_DIR": "/tmp/storage/data"
+    }
 }

@@ -1,10 +1,28 @@
 <?php
 
-$app = new Illuminate\Foundation\Application(
-    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
-);
+/*
+|--------------------------------------------------------------------------
+| Create The Application
+|--------------------------------------------------------------------------
+*/
 
-// Pindahkan storage path ke /tmp agar session, log, dan view bisa ditulis
+// OVERRIDE SAKTI: Kita paksa method bootstrapPath() mengembalikan folder /tmp jika di Vercel
+$app = new class($_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)) extends Illuminate\Foundation\Application {
+    public function bootstrapPath($path = '')
+    {
+        if (isset($_SERVER['VERCEL_URL'])) {
+            return '/tmp/bootstrap' . ($path ? DIRECTORY_SEPARATOR . $path : '');
+        }
+        return parent::bootstrapPath($path);
+    }
+};
+
+/*
+|--------------------------------------------------------------------------
+| Bind Important Interfaces
+|--------------------------------------------------------------------------
+*/
+
 if (isset($_SERVER['VERCEL_URL'])) {
     $app->useStoragePath('/tmp/storage');
 }

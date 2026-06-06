@@ -1,10 +1,7 @@
 <?php
 
-// Paksa system PHP tahu kalau folder bootstrap cache dipindah ke /tmp
-if (isset($_SERVER['VERCEL_URL'])) {
-    putenv('LARAVEL_BOOTSTRAP_CACHE=/tmp/bootstrap/cache');
-    $_ENV['LARAVEL_BOOTSTRAP_CACHE'] = '/tmp/bootstrap/cache';
-
+// Buat struktur folder bayangan di /tmp Vercel sebelum Laravel di-boot
+if (isset($_SERVER['VERCEL_URL']) || env('VERCEL_URL')) {
     $dirs = [
         '/tmp/storage/framework/views',
         '/tmp/storage/framework/cache',
@@ -20,6 +17,7 @@ if (isset($_SERVER['VERCEL_URL'])) {
     }
 }
 
+// Load Composer Autoloader dan Boot Framework Laravel
 require __DIR__ . '/../vendor/autoload.php';
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 

@@ -15,6 +15,16 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
+// --- POTONG KOMPAS UTK VERCEL SERVERLESS (TARUH DI SINI) ---
+if (isset($_SERVER['VERCEL_URL'])) {
+    // Paksa folder storage pindah ke /tmp yang writable
+    $app->useStoragePath('/tmp/storage');
+    
+    // Paksa folder bootstrap cache pindah ke /tmp
+    $app->useBootstrapPath('/tmp/bootstrap');
+}
+// -----------------------------------------------------------
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces

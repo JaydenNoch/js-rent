@@ -11,9 +11,20 @@
 |
 */
 
-$app = new Illuminate\Foundation\Application(
-    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
-);
+// TRICK PAMUNGKAS VERCEL: Paksa Laravel pakai Application Class custom agar tidak nulis file cache
+$app = new class($_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)) extends Illuminate\Foundation\Application {
+    public function bootstrapPath($path = '') {
+        if (isset($_SERVER['VERCEL_URL'])) {
+            return '/tmp/bootstrap' . ($path ? DIRECTORY_SEPARATOR . $path : '');
+        }
+        return parent::bootstrapPath($path);
+    }
+};
+
+// Pindahkan storage path-nya saja ke /tmp biar session & view gak eror read-only
+if (isset($_SERVER['VERCEL_URL'])) {
+    $app->useStoragePath('/tmp/storage');
+}
 
 /*
 |--------------------------------------------------------------------------

@@ -1,13 +1,12 @@
 <?php
 
-// Buat struktur folder bayangan di /tmp Vercel sebelum Laravel di-boot
-if (isset($_SERVER['VERCEL_URL']) || env('VERCEL_URL')) {
+// Pakai $_SERVER aja, JANGAN pakai env() di sini biar gak nyebabin crash fatal error!
+if (isset($_SERVER['VERCEL_URL'])) {
     $dirs = [
         '/tmp/storage/framework/views',
         '/tmp/storage/framework/cache',
         '/tmp/storage/framework/sessions',
-        '/tmp/storage/logs',
-        '/tmp/bootstrap/cache'
+        '/tmp/storage/logs'
     ];
     
     foreach ($dirs as $dir) {
@@ -17,9 +16,13 @@ if (isset($_SERVER['VERCEL_URL']) || env('VERCEL_URL')) {
     }
 }
 
-// Load Composer Autoloader dan Boot Framework Laravel
+// Autoload dimuat di sini, baru fungsi Laravel bisa hidup
 require __DIR__ . '/../vendor/autoload.php';
 $app = require_once __DIR__ . '/../bootstrap/app.php';
+
+if (isset($_SERVER['VERCEL_URL'])) {
+    $app->useStoragePath('/tmp/storage');
+}
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 

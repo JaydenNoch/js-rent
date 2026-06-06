@@ -17,6 +17,7 @@
     "env": {
         "LOG_CHANNEL": "stderr",
         "VIEW_COMPILED_PATH": "/tmp/storage/framework/views",
-        "DATA_CACHE_DIR": "/tmp/storage/data"
+        "DATA_CACHE_DIR": "/tmp/storage/data",
+        "LARAVEL_BYPASS_MANIFEST": "true"
     }
 }
